@@ -77,14 +77,14 @@
 
         for (const subject in categorizedAnswers) {
             if (categorizedAnswers.hasOwnProperty(subject)) {
-                answerHTML += "<b>" + subject + ":</b><br>"; // **Добавляем заголовок категории**
+                answerHTML += "<b>" + subject + ":</b><br>";
                 const questions = categorizedAnswers[subject];
                 for (let i = 0; i < questions.length; i++) {
                     const questionData = questions[i];
                     const questionNumber = i + 1;
                     const buttonPrefix = (subject === "Химия") ? "х" : "";
-                    const buttonText = buttonPrefix + questionNumber; // **Текст кнопки теперь только префикс + номер**
-                    const button = createQuestionButton(questionNumber, questionData, buttonText); // **Передаем buttonText вместо subject и prefix**
+                    const buttonText = buttonPrefix + questionNumber;
+                    const button = createQuestionButton(questionNumber, questionData, buttonText);
                     answerHTML += button.outerHTML + "  ";
                     if (questionNumber % 8 === 0) {
                         answerHTML += "<br>";
@@ -98,9 +98,10 @@
         document.body.appendChild(answerBox);
     }
 
-    function createQuestionButton(questionNumber, questionData, buttonText) { // **Убрали subject и prefix, добавили buttonText**
+    function createQuestionButton(questionNumber, questionData, buttonText) {
+        console.log("createQuestionButton called:", questionNumber, questionData, buttonText); // *** DEBUGGING ***
         const button = document.createElement("button");
-        button.textContent = buttonText; // **Используем buttonText для текста кнопки**
+        button.textContent = buttonText;
         button.style.padding = "5px 8px";
         button.style.margin = "1px";
         button.style.cursor = "pointer";
@@ -110,17 +111,22 @@
         button.style.fontSize = "12px";
 
         button.onclick = function() {
+            console.log("Button clicked for question:", questionNumber); // *** DEBUGGING ***
             displayQuestionAndAnswer(questionData);
         };
         return button;
     }
 
     function displayQuestionAndAnswer(questionData) {
+        console.log("displayQuestionAndAnswer called:", questionData); // *** DEBUGGING ***
         if (currentQuestionDisplay) {
+            console.log("currentQuestionDisplay is:", currentQuestionDisplay); // *** DEBUGGING ***
             currentQuestionDisplay.innerHTML = `
                 <b>Вопрос:</b> ${questionData.question}<br><br>
                 <b>Ответ:</b> ${questionData.answer}
             `;
+        } else {
+            console.error("currentQuestionDisplay is NULL or undefined!"); // *** DEBUGGING ***
         }
     }
 
