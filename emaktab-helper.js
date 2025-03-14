@@ -127,27 +127,36 @@
     }
 
     function displayQuestionAndAnswer(questionData) {
-        console.log("displayQuestionAndAnswer called:", questionData); // *** DEBUGGING - CHECK questionData ***
+        console.log("displayQuestionAndAnswer called:", questionData);
         if (currentQuestionDisplay) {
             console.log("currentQuestionDisplay is:", currentQuestionDisplay);
 
-            // *** УПРОЩЕННЫЕ СТИЛИ и innerHTML для ТЕСТИРОВАНИЯ ***
-            currentQuestionDisplay.style.padding = "10px"; // Оставляем padding
-            currentQuestionDisplay.style.border = "1px solid black"; // Делаем границу ЧЕРНОЙ, чтобы было видно
-            currentQuestionDisplay.style.backgroundColor = "white"; // Делаем фон БЕЛЫМ
-            currentQuestionDisplay.style.color = "black"; // Делаем текст ЧЕРНЫМ
+            // *** РАДИКАЛЬНЫЕ СТИЛИ для максимальной видимости! ***
+            currentQuestionDisplay.style.position = "fixed";     // Фиксированное позиционирование
+            currentQuestionDisplay.style.top = "0";            // Прижать к верху экрана
+            currentQuestionDisplay.style.left = "0";           // Прижать к левому краю экрана
+            currentQuestionDisplay.style.width = "98%";         // Занять почти всю ширину экрана
+            currentQuestionDisplay.style.height = "50%";        // Занять половину высоты экрана
+            currentQuestionDisplay.style.padding = "20px";       // Большой padding
+            currentQuestionDisplay.style.border = "5px solid red";   // Толстая КРАСНАЯ граница
+            currentQuestionDisplay.style.backgroundColor = "lightyellow"; // Ярко-ЖЕЛТЫЙ фон
+            currentQuestionDisplay.style.color = "blue";          // ЯРКО-СИНИЙ текст
+            currentQuestionDisplay.style.fontSize = "20px";      // Крупный шрифт
+            currentQuestionDisplay.style.zIndex = "10000";      // Самый высокий z-index
+
             currentQuestionDisplay.innerHTML = `
                 <b>Вопрос:</b> ${questionData.question}<br><br>
                 <b>Ответ:</b> ${questionData.answer}
-            `; 
+            `;
 
-            console.log("currentQuestionDisplay.innerHTML set to:", currentQuestionDisplay.innerHTML); // *** DEBUGGING - CHECK innerHTML VALUE ***
+            console.log("currentQuestionDisplay.innerHTML set to:", currentQuestionDisplay.innerHTML);
 
 
         } else {
             console.error("currentQuestionDisplay is NULL or undefined!");
         }
     }
+
 
 
     function toggleAnswerBox() {
