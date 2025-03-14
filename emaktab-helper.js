@@ -8,6 +8,7 @@
     // -----------------------------------------------------------------------
 
     const categorizedAnswers = {
+
         "Алгебра": [
             { question: "Вопрос 1 по Алгебре?", answer: "D" },
             { question: "Вопрос 2 по Алгебре?", answer: "A" },
@@ -47,12 +48,113 @@
     };
 
     // -----------------------------------------------------------------------
+    // UI & Functionality - **DO NOT MODIFY BELOW UNLESS YOU KNOW WHAT YOU ARE DOING**
+    // -----------------------------------------------------------------------
+
+    let helperWindow = null;
+    let popupWindow = null;
+    let currentQuestionData = null;
+
+    function createHelperWindow() {
+        helperWindow = document.createElement('div');
+        helperWindow.id = 'examHelperWindow';
+        helperWindow.style.cssText = `
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(220, 220, 220, 0.9);
+            border: 1px solid #888;
+            padding: 5px;
+            z-index: 1000; /* Ensure it's on top */
+            display: none; /* Hidden by default */
+            font-size: 14px;
+            max-height: 200px; /* Compact height */
+            overflow-y: auto; /* Scroll if content overflows */
+        `;
+        document.body.appendChild(helperWindow);
+
+        // Add question buttons for each category
+        for (const category in categorizedAnswers) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.textContent = category + ": ";
+            helperWindow.appendChild(categoryDiv);
+            categorizedAnswers[category].forEach((questionData, index) => {
+                const button = document.createElement('button');
+                button.textContent = (index + 1); // Question number
+                button.style.cssText = `
+                    margin: 2px;
+                    padding: 2px 5px;
+                    font-size: 12px;
+                `;
+                button.onclick = () => showPopupQuestion(category, index);
+                categoryDiv.appendChild(button);
+            });
+        }
+    }
+
+    function createPopupWindow() {
+        popupWindow = document.createElement('div');
+        popupWindow.id = 'examPopupWindow';
+        popupWindow.style.cssText = `
+            position: fixed;
+            bottom: 20px; /* Positioned above helper window */
+            left: 10px; /* Slightly offset from helper window */
+            background-color: rgba(240, 240, 240, 0.95);
+            border: 1px solid #888;
+            padding: 15px;
+            z-index: 1001; /* Above helper window */
+            display: none; /* Hidden by default */
+            max-width: 500px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 16px;
+        `;
+        document.body.appendChild(popupWindow);
+    }
+
+    function showPopupQuestion(category, questionIndex) {
+        currentQuestionData = categorizedAnswers[category][questionIndex];
+        if (popupWindow) {
+            popupWindow.textContent = `${currentQuestionData.question} Ответ: ${currentQuestionData.answer}`;
+            popupWindow.style.display = 'block';
+        }
+    }
+
+    function hidePopupWindow() {
+        if (popupWindow) {
+            popupWindow.style.display = 'none';
+        }
+    }
+
+    function toggleHelperWindow() {
+        if (helperWindow) {
+            helperWindow.style.display = helperWindow.style.display === 'none' ? 'block' : 'none';
+            hidePopupWindow(); // Close popup when toggling helper
+        }
+    }
+
+    // Event listeners
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'z') {
+            toggleHelperWindow();
+        } else if (event.key === 'x') {
+            hidePopupWindow();
+        }
+    });
+
+    // Initialize UI
+    createHelperWindow();
+    createPopupWindow();
+
+})();
+
+    // -----------------------------------------------------------------------
     // End of Configuration
     // -----------------------------------------------------------------------
 
     let answerBox = null;
     let isAnswerBoxVisible = false;
-    let questionPopup = null; // **Новая переменная для поп-আপ окна**
+    let questionPopup = null; // **Новая переменная для поп-ап окна**
 
 
     function createAnswerBox() {
