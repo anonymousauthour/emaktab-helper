@@ -53,6 +53,8 @@
     let answerBox = null;
     let isAnswerBoxVisible = false;
     let currentQuestionDisplay = null;
+    let buttonsContainer = null; // **Новая переменная для контейнера кнопок**
+
 
     function createAnswerBox() {
         answerBox = document.createElement("div");
@@ -73,9 +75,13 @@
         let answerHTML = "";
 
         currentQuestionDisplay = document.createElement("div");
-        console.log("currentQuestionDisplay created:", currentQuestionDisplay); // *** DEBUGGING ***
-        answerBox.appendChild(currentQuestionDisplay);
-        console.log("answerBox children after append:", answerBox.children); // *** DEBUGGING ***
+        console.log("currentQuestionDisplay created:", currentQuestionDisplay);
+        answerBox.appendChild(currentQuestionDisplay); // **Добавляем currentQuestionDisplay ПЕРВЫМ**
+
+        buttonsContainer = document.createElement("div"); // **Создаем контейнер для кнопок**
+        console.log("buttonsContainer created:", buttonsContainer); // *** DEBUGGING ***
+        answerBox.appendChild(buttonsContainer); // **Добавляем buttonsContainer ВТОРЫМ**
+        console.log("answerBox children after append:", answerBox.children);
 
 
         for (const subject in categorizedAnswers) {
@@ -97,7 +103,7 @@
             }
         }
 
-        answerBox.innerHTML += answerHTML;
+        buttonsContainer.innerHTML = answerHTML; // **Добавляем HTML КНОПОК в buttonsContainer, а НЕ в answerBox напрямую!**
         document.body.appendChild(answerBox);
     }
 
@@ -123,16 +129,15 @@
     function displayQuestionAndAnswer(questionData) {
         console.log("displayQuestionAndAnswer called:", questionData);
         if (currentQuestionDisplay) {
-            console.log("currentQuestionDisplay is:", currentQuestionDisplay); // *** DEBUGGING - CHECK currentQuestionDisplay VALUE ***
-            currentQuestionDisplay.textContent = "TEST QUESTION AND ANSWER DISPLAY"; // *** SIMPLIFIED CONTENT FOR TESTING ***
-            // currentQuestionDisplay.innerHTML = `  <-- COMMENTED OUT ORIGINAL innerHTML
-            //     <div style="padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
-            //         <b>Вопрос:</b> ${questionData.question}
-            //     </div>
-            //     <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
-            //         <b>Ответ:</b> ${questionData.answer}
-            //     </div>
-            // `;
+            console.log("currentQuestionDisplay is:", currentQuestionDisplay);
+            currentQuestionDisplay.innerHTML = `
+                <div style="padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
+                    <b>Вопрос:</b> ${questionData.question}
+                </div>
+                <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+                    <b>Ответ:</b> ${questionData.answer}
+                </div>
+            `;
         } else {
             console.error("currentQuestionDisplay is NULL or undefined!");
         }
