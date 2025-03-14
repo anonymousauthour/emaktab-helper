@@ -73,7 +73,10 @@
         let answerHTML = "";
 
         currentQuestionDisplay = document.createElement("div");
+        console.log("currentQuestionDisplay created:", currentQuestionDisplay); // *** DEBUGGING ***
         answerBox.appendChild(currentQuestionDisplay);
+        console.log("answerBox children after append:", answerBox.children); // *** DEBUGGING ***
+
 
         for (const subject in categorizedAnswers) {
             if (categorizedAnswers.hasOwnProperty(subject)) {
@@ -99,6 +102,7 @@
     }
 
     function createQuestionButton(questionNumber, questionData, buttonText) {
+        console.log("createQuestionButton called:", questionNumber, questionData, buttonText);
         const button = document.createElement("button");
         button.textContent = buttonText;
         button.style.padding = "5px 8px";
@@ -110,21 +114,27 @@
         button.style.fontSize = "12px";
 
         button.onclick = function() {
+            console.log("Button clicked for question:", questionNumber);
             displayQuestionAndAnswer(questionData);
         };
         return button;
     }
 
     function displayQuestionAndAnswer(questionData) {
+        console.log("displayQuestionAndAnswer called:", questionData);
         if (currentQuestionDisplay) {
-            currentQuestionDisplay.innerHTML = `
-                <div style="padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
-                    <b>Вопрос:</b> ${questionData.question}
-                </div>
-                <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
-                    <b>Ответ:</b> ${questionData.answer}
-                </div>
-            `; // **Добавил DIV контейнеры со стилями для вопроса и ответа**
+            console.log("currentQuestionDisplay is:", currentQuestionDisplay); // *** DEBUGGING - CHECK currentQuestionDisplay VALUE ***
+            currentQuestionDisplay.textContent = "TEST QUESTION AND ANSWER DISPLAY"; // *** SIMPLIFIED CONTENT FOR TESTING ***
+            // currentQuestionDisplay.innerHTML = `  <-- COMMENTED OUT ORIGINAL innerHTML
+            //     <div style="padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
+            //         <b>Вопрос:</b> ${questionData.question}
+            //     </div>
+            //     <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+            //         <b>Ответ:</b> ${questionData.answer}
+            //     </div>
+            // `;
+        } else {
+            console.error("currentQuestionDisplay is NULL or undefined!");
         }
     }
 
