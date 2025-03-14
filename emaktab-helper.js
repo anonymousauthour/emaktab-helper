@@ -97,6 +97,7 @@
     }
 
     function createQuestionButton(questionNumber, questionData, buttonText) {
+        console.log("createQuestionButton called:", questionNumber, questionData, buttonText); // *** DEBUGGING ***
         const button = document.createElement("button");
         button.textContent = buttonText;
         button.style.padding = "5px 8px";
@@ -108,19 +109,25 @@
         button.style.fontSize = "12px";
 
         button.onclick = function() {
-            showQuestionPopup(questionData); // **Вызываем функцию для показа поп-ап окна**
+            console.log("Button clicked for question:", questionNumber); // *** DEBUGGING ***
+            showQuestionPopup(questionData);
         };
         return button;
     }
 
     function showQuestionPopup(questionData) {
+        console.log("showQuestionPopup called:", questionData); // *** DEBUGGING ***
+
         if (questionPopup) {
-            questionPopup.remove(); // Удаляем старое поп-ап окно, если есть
+            questionPopup.remove();
+            console.log("Previous questionPopup removed"); // *** DEBUGGING ***
         }
 
         questionPopup = document.createElement("div");
+        console.log("questionPopup created:", questionPopup); // *** DEBUGGING ***
+
         questionPopup.style.position = "fixed";
-        questionPopup.style.top = "50px"; // Позиционируем немного выше answerBox
+        questionPopup.style.top = "50px";
         questionPopup.style.left = "10px";
         questionPopup.style.backgroundColor = "white";
         questionPopup.style.border = "1px solid #ccc";
@@ -130,7 +137,7 @@
         questionPopup.style.fontFamily = "sans-serif";
         questionPopup.style.fontSize = "16px";
         questionPopup.style.lineHeight = "1.5";
-        questionPopup.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)"; // Добавляем тень
+        questionPopup.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
 
         questionPopup.innerHTML = `
             <div style="margin-bottom: 15px;">
@@ -142,14 +149,21 @@
             <button id="close-popup-button" style="position: absolute; top: 10px; right: 10px; border: none; background: none; cursor: pointer; font-size: 18px;">
                 X
             </button>
-        `; // **Добавляем HTML для вопроса, ответа и кнопки "X"**
+        `;
+
+        console.log("questionPopup.innerHTML set:", questionPopup.innerHTML); // *** DEBUGGING ***
 
         document.body.appendChild(questionPopup);
+        console.log("questionPopup appended to document.body:", questionPopup); // *** DEBUGGING ***
+
 
         const closeButton = questionPopup.querySelector('#close-popup-button');
+        console.log("closeButton found:", closeButton); // *** DEBUGGING ***
         closeButton.onclick = function() {
-            questionPopup.remove(); // Закрытие поп-ап окна по клику на "X"
-            questionPopup = null; // Сбрасываем переменную questionPopup
+            console.log("Close button clicked"); // *** DEBUGGING ***
+            questionPopup.remove();
+            questionPopup = null;
+            console.log("questionPopup removed and reset"); // *** DEBUGGING ***
         };
     }
 
