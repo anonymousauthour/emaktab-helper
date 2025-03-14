@@ -8,7 +8,7 @@
     // -----------------------------------------------------------------------
 
     const categorizedAnswers = {
-        "Алгебра": [  // Теперь массив ОБЪЕКТОВ, а не просто букв
+        "Алгебра": [
             { question: "Вопрос 1 по Алгебре?", answer: "D" },
             { question: "Вопрос 2 по Алгебре?", answer: "A" },
             { question: "Вопрос 3 по Алгебре?", answer: "B" },
@@ -26,7 +26,7 @@
             { question: "Вопрос 15 по Алгебре?", answer: "C" },
             { question: "Вопрос 16 по Алгебре?", answer: "D" }
         ],
-        "Химия": [   // И здесь тоже массив ОБЪЕКТОВ
+        "Химия": [
             { question: "Вопрос 1 по Химии?", answer: "A" },
             { question: "Вопрос 2 по Химии?", answer: "C" },
             { question: "Вопрос 3 по Химии?", answer: "B" },
@@ -99,7 +99,6 @@
     }
 
     function createQuestionButton(questionNumber, questionData, buttonText) {
-        console.log("createQuestionButton called:", questionNumber, questionData, buttonText); // *** DEBUGGING ***
         const button = document.createElement("button");
         button.textContent = buttonText;
         button.style.padding = "5px 8px";
@@ -111,22 +110,21 @@
         button.style.fontSize = "12px";
 
         button.onclick = function() {
-            console.log("Button clicked for question:", questionNumber); // *** DEBUGGING ***
             displayQuestionAndAnswer(questionData);
         };
         return button;
     }
 
     function displayQuestionAndAnswer(questionData) {
-        console.log("displayQuestionAndAnswer called:", questionData); // *** DEBUGGING ***
         if (currentQuestionDisplay) {
-            console.log("currentQuestionDisplay is:", currentQuestionDisplay); // *** DEBUGGING ***
             currentQuestionDisplay.innerHTML = `
-                <b>Вопрос:</b> ${questionData.question}<br><br>
-                <b>Ответ:</b> ${questionData.answer}
-            `;
-        } else {
-            console.error("currentQuestionDisplay is NULL or undefined!"); // *** DEBUGGING ***
+                <div style="padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
+                    <b>Вопрос:</b> ${questionData.question}
+                </div>
+                <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+                    <b>Ответ:</b> ${questionData.answer}
+                </div>
+            `; // **Добавил DIV контейнеры со стилями для вопроса и ответа**
         }
     }
 
