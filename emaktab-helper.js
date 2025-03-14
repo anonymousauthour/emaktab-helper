@@ -65,9 +65,9 @@
         answerBox.style.zIndex = "9999";
         answerBox.style.fontFamily = "sans-serif";
         answerBox.style.fontSize = "14px";
-        answerBox.style.lineHeight = "1.3"; // Уменьшил lineHeight для компактности
+        answerBox.style.lineHeight = "1.3";
         answerBox.style.display = "none";
-        answerBox.style.maxWidth = "350px"; // Немного уменьшил maxWidth
+        answerBox.style.maxWidth = "350px";
         answerBox.style.wordWrap = "break-word";
 
         let answerHTML = "";
@@ -77,18 +77,20 @@
 
         for (const subject in categorizedAnswers) {
             if (categorizedAnswers.hasOwnProperty(subject)) {
+                answerHTML += "<b>" + subject + ":</b><br>"; // **Добавляем заголовок категории**
                 const questions = categorizedAnswers[subject];
                 for (let i = 0; i < questions.length; i++) {
                     const questionData = questions[i];
                     const questionNumber = i + 1;
-                    const buttonPrefix = (subject === "Химия") ? "х" : ""; // Префикс "х" для Химии
-                    const button = createQuestionButton(subject, questionNumber, questionData, buttonPrefix); // Передаем префикс
+                    const buttonPrefix = (subject === "Химия") ? "х" : "";
+                    const buttonText = buttonPrefix + questionNumber; // **Текст кнопки теперь только префикс + номер**
+                    const button = createQuestionButton(questionNumber, questionData, buttonText); // **Передаем buttonText вместо subject и prefix**
                     answerHTML += button.outerHTML + "  ";
-                    if (questionNumber % 8 === 0) { // Перенос строки после каждых 8 кнопок (для компактности)
+                    if (questionNumber % 8 === 0) {
                         answerHTML += "<br>";
                     }
                 }
-                answerHTML += "<br>"; // Добавляем небольшой отступ между предметами (хотя заголовков больше нет)
+                answerHTML += "<br>";
             }
         }
 
@@ -96,16 +98,16 @@
         document.body.appendChild(answerBox);
     }
 
-    function createQuestionButton(subject, questionNumber, questionData, buttonPrefix) {
+    function createQuestionButton(questionNumber, questionData, buttonText) { // **Убрали subject и prefix, добавили buttonText**
         const button = document.createElement("button");
-        button.textContent = buttonPrefix + questionNumber; // Текст кнопки - префикс + номер вопроса
-        button.style.padding = "5px 8px"; // Уменьшил padding по горизонтали
-        button.style.margin = "1px"; // Уменьшил margin
+        button.textContent = buttonText; // **Используем buttonText для текста кнопки**
+        button.style.padding = "5px 8px";
+        button.style.margin = "1px";
         button.style.cursor = "pointer";
         button.style.backgroundColor = "#f0f0f0";
         button.style.border = "1px solid #ccc";
         button.style.borderRadius = "3px";
-        button.style.fontSize = "12px"; // Уменьшил fontSize
+        button.style.fontSize = "12px";
 
         button.onclick = function() {
             displayQuestionAndAnswer(questionData);
