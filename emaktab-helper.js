@@ -48,7 +48,7 @@
     };
 
     // -----------------------------------------------------------------------
-    // UI & Functionality - **DO NOT MODIFY BELOW UNLESS YOU KNOW WHAT YOU ARE DOING**
+    // UI & Functionality
     // -----------------------------------------------------------------------
 
     let helperWindow = null;
@@ -58,34 +58,31 @@
     function createHelperWindow() {
         helperWindow = document.createElement('div');
         helperWindow.id = 'examHelperWindow';
-        helperWindow.style.cssText = `
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            background-color: rgba(220, 220, 220, 0.9);
-            border: 1px solid #888;
-            padding: 5px;
-            z-index: 1000;
-            display: none;
-            font-size: 14px;
-            max-height: 200px;
-            overflow-y: auto;
-        `;
+        helperWindow.style.position = 'fixed';
+        helperWindow.style.bottom = '0';
+        helperWindow.style.left = '0';
+        helperWindow.style.backgroundColor = 'rgba(220, 220, 220, 0.9)';
+        helperWindow.style.border = '1px solid #888';
+        helperWindow.style.padding = '5px';
+        helperWindow.style.zIndex = '1000';
+        helperWindow.style.display = 'none';
+        helperWindow.style.fontSize = '14px';
+        helperWindow.style.maxHeight = '200px';
+        helperWindow.style.overflowY = 'auto';
+
         document.body.appendChild(helperWindow);
 
-        // Add question buttons for each category
+        // Category Divs and Question Buttons
         for (const category in categorizedAnswers) {
             const categoryDiv = document.createElement('div');
             categoryDiv.textContent = category + ": ";
             helperWindow.appendChild(categoryDiv);
             categorizedAnswers[category].forEach((questionData, index) => {
                 const button = document.createElement('button');
-                button.textContent = (index + 1); // Question number
-                button.style.cssText = `
-                    margin: 2px;
-                    padding: 2px 5px;
-                    font-size: 12px;
-                `;
+                button.textContent = (index + 1);
+                button.style.margin = '2px';
+                button.style.padding = '2px 5px';
+                button.style.fontSize = '12px';
                 button.onclick = () => showPopupQuestion(category, index);
                 categoryDiv.appendChild(button);
             });
@@ -95,20 +92,19 @@
     function createPopupWindow() {
         popupWindow = document.createElement('div');
         popupWindow.id = 'examPopupWindow';
-        popupWindow.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            left: 10px;
-            background-color: rgba(240, 240, 240, 0.95);
-            border: 1px solid #888;
-            padding: 15px;
-            z-index: 1001;
-            display: none;
-            max-width: 500px;
-            max-height: 300px;
-            overflow-y: auto;
-            font-size: 16px;
-        `;
+        popupWindow.style.position = 'fixed';
+        popupWindow.style.bottom = '20px';
+        popupWindow.style.left = '10px';
+        popupWindow.style.backgroundColor = 'rgba(240, 240, 240, 0.95)';
+        popupWindow.style.border = '1px solid #888';
+        popupWindow.style.padding = '15px';
+        popupWindow.style.zIndex = '1001';
+        popupWindow.style.display = 'none';
+        popupWindow.style.maxWidth = '500px';
+        popupWindow.style.maxHeight = '300px';
+        popupWindow.style.overflowY = 'auto';
+        popupWindow.style.fontSize = '16px';
+
         document.body.appendChild(popupWindow);
     }
 
