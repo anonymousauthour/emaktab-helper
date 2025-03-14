@@ -1,5 +1,3 @@
-// exam_helper.js - This file is loaded remotely by the Tampermonkey script.
-
 (function() {
     'use strict';
 
