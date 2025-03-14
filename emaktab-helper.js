@@ -73,6 +73,13 @@
 
         let answerHTML = "";
 
+        currentQuestionDisplay = document.createElement("div");
+        answerBox.appendChild(currentQuestionDisplay);
+
+        buttonsContainer = document.createElement("div");
+        answerBox.appendChild(buttonsContainer);
+
+
         for (const subject in categorizedAnswers) {
             if (categorizedAnswers.hasOwnProperty(subject)) {
                 answerHTML += "<b>" + subject + ":</b><br>";
@@ -92,12 +99,12 @@
             }
         }
 
-        answerBox.innerHTML += answerHTML;
+        buttonsContainer.innerHTML = answerHTML;
         document.body.appendChild(answerBox);
     }
 
     function createQuestionButton(questionNumber, questionData, buttonText) {
-        console.log("createQuestionButton called:", questionNumber, questionData, buttonText); // *** DEBUGGING ***
+        console.log("createQuestionButton вызвана:", questionNumber, questionData, buttonText); // *** DEBUGGING: Вызвана ли функция создания кнопки? ***
         const button = document.createElement("button");
         button.textContent = buttonText;
         button.style.padding = "5px 8px";
@@ -108,10 +115,13 @@
         button.style.borderRadius = "3px";
         button.style.fontSize = "12px";
 
+        // *** DEBUGGING: Добавим console.log ПЕРЕД и ПОСЛЕ button.onclick ***
+        console.log("Начало назначения button.onclick для кнопки:", buttonText);
         button.onclick = function() {
-            console.log("Button clicked for question:", questionNumber); // *** DEBUGGING ***
+            console.log("Кнопка вопроса КЛИКНУТА:", questionNumber); // *** DEBUGGING: Клик по кнопке зарегистрирован? ***
             showQuestionPopup(questionData);
         };
+        console.log("Конец назначения button.onclick для кнопки:", buttonText, " onclick:", button.onclick); // *** DEBUGGING: Проверяем, что onclick назначен и не null ***
         return button;
     }
 
