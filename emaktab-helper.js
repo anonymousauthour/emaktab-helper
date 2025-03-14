@@ -12,18 +12,39 @@
             { question: "Вопрос 1 по Алгебре?", answer: "D" },
             { question: "Вопрос 2 по Алгебре?", answer: "A" },
             { question: "Вопрос 3 по Алгебре?", answer: "B" },
-            { question: "Вопрос 4 по Алгебре?", answer: "C" }
+            { question: "Вопрос 4 по Алгебре?", answer: "C" },
+            { question: "Вопрос 5 по Алгебре?", answer: "A" },
+            { question: "Вопрос 6 по Алгебре?", answer: "B" },
+            { question: "Вопрос 7 по Алгебре?", answer: "C" },
+            { question: "Вопрос 8 по Алгебре?", answer: "D" },
+            { question: "Вопрос 9 по Алгебре?", answer: "A" },
+            { question: "Вопрос 10 по Алгебре?", answer: "B" },
+            { question: "Вопрос 11 по Алгебре?", answer: "C" },
+            { question: "Вопрос 12 по Алгебре?", answer: "D" },
+            { question: "Вопрос 13 по Алгебре?", answer: "A" },
+            { question: "Вопрос 14 по Алгебре?", answer: "B" },
+            { question: "Вопрос 15 по Алгебре?", answer: "C" },
+            { question: "Вопрос 16 по Алгебре?", answer: "D" }
         ],
         "Химия": [   // И здесь тоже массив ОБЪЕКТОВ
             { question: "Вопрос 1 по Химии?", answer: "A" },
             { question: "Вопрос 2 по Химии?", answer: "C" },
             { question: "Вопрос 3 по Химии?", answer: "B" },
-            { question: "Вопрос 4 по Химии?", answer: "D" }
+            { question: "Вопрос 4 по Химии?", answer: "D" },
+            { question: "Вопрос 5 по Химии?", answer: "A" },
+            { question: "Вопрос 6 по Химии?", answer: "C" },
+            { question: "Вопрос 7 по Химии?", answer: "B" },
+            { question: "Вопрос 8 по Химии?", answer: "D" },
+            { question: "Вопрос 9 по Химии?", answer: "A" },
+            { question: "Вопрос 10 по Химии?", answer: "C" },
+            { question: "Вопрос 11 по Химии?", answer: "B" },
+            { question: "Вопрос 12 по Химии?", answer: "D" },
+            { question: "Вопрос 13 по Химии?", answer: "A" },
+            { question: "Вопрос 14 по Химии?", answer: "C" },
+            { question: "Вопрос 15 по Химии?", answer: "B" },
+            { question: "Вопрос 16 по Химии?", answer: "D" }
         ]
     };
-
-    // **УДАЛЕНО: QUESTION_SELECTOR_TEMPLATE больше не нужен**
-
 
     // -----------------------------------------------------------------------
     // End of Configuration
@@ -31,7 +52,7 @@
 
     let answerBox = null;
     let isAnswerBoxVisible = false;
-    let currentQuestionDisplay = null; // Элемент для отображения вопроса и ответа
+    let currentQuestionDisplay = null;
 
     function createAnswerBox() {
         answerBox = document.createElement("div");
@@ -44,47 +65,50 @@
         answerBox.style.zIndex = "9999";
         answerBox.style.fontFamily = "sans-serif";
         answerBox.style.fontSize = "14px";
-        answerBox.style.lineHeight = "1.5";
+        answerBox.style.lineHeight = "1.3"; // Уменьшил lineHeight для компактности
         answerBox.style.display = "none";
-        answerBox.style.maxWidth = "400px"; // Увеличил maxWidth для вопросов и ответов
+        answerBox.style.maxWidth = "350px"; // Немного уменьшил maxWidth
         answerBox.style.wordWrap = "break-word";
 
         let answerHTML = "";
 
-        currentQuestionDisplay = document.createElement("div"); // Создаем элемент для вопроса и ответа
-        answerBox.appendChild(currentQuestionDisplay); // Добавляем его в answerBox
+        currentQuestionDisplay = document.createElement("div");
+        answerBox.appendChild(currentQuestionDisplay);
 
         for (const subject in categorizedAnswers) {
             if (categorizedAnswers.hasOwnProperty(subject)) {
-                answerHTML += "<b>" + subject + ":</b><br>";
-                const questions = categorizedAnswers[subject]; // Теперь это массив ОБЪЕКТОВ вопросов
+                const questions = categorizedAnswers[subject];
                 for (let i = 0; i < questions.length; i++) {
-                    const questionData = questions[i]; // Получаем объект вопроса
+                    const questionData = questions[i];
                     const questionNumber = i + 1;
-                    const button = createQuestionButton(subject, questionNumber, questionData); // Создаем кнопку для вопроса
+                    const buttonPrefix = (subject === "Химия") ? "х" : ""; // Префикс "х" для Химии
+                    const button = createQuestionButton(subject, questionNumber, questionData, buttonPrefix); // Передаем префикс
                     answerHTML += button.outerHTML + "  ";
+                    if (questionNumber % 8 === 0) { // Перенос строки после каждых 8 кнопок (для компактности)
+                        answerHTML += "<br>";
+                    }
                 }
-                answerHTML += "<br><br>";
+                answerHTML += "<br>"; // Добавляем небольшой отступ между предметами (хотя заголовков больше нет)
             }
         }
 
-        answerBox.innerHTML += answerHTML; // Добавляем кнопки в answerBox (после элемента для вопроса и ответа)
+        answerBox.innerHTML += answerHTML;
         document.body.appendChild(answerBox);
     }
 
-    function createQuestionButton(subject, questionNumber, questionData) {
+    function createQuestionButton(subject, questionNumber, questionData, buttonPrefix) {
         const button = document.createElement("button");
-        button.textContent = `${subject} ${questionNumber}`; // Текст кнопки - предмет и номер вопроса
-        button.style.padding = "5px 10px";
-        button.style.margin = "2px";
+        button.textContent = buttonPrefix + questionNumber; // Текст кнопки - префикс + номер вопроса
+        button.style.padding = "5px 8px"; // Уменьшил padding по горизонтали
+        button.style.margin = "1px"; // Уменьшил margin
         button.style.cursor = "pointer";
         button.style.backgroundColor = "#f0f0f0";
         button.style.border = "1px solid #ccc";
         button.style.borderRadius = "3px";
-        button.style.fontSize = "13px";
+        button.style.fontSize = "12px"; // Уменьшил fontSize
 
         button.onclick = function() {
-            displayQuestionAndAnswer(questionData); // Функция для отображения вопроса и ответа
+            displayQuestionAndAnswer(questionData);
         };
         return button;
     }
@@ -94,7 +118,7 @@
             currentQuestionDisplay.innerHTML = `
                 <b>Вопрос:</b> ${questionData.question}<br><br>
                 <b>Ответ:</b> ${questionData.answer}
-            `; // Отображаем вопрос и ответ в элементе currentQuestionDisplay
+            `;
         }
     }
 
