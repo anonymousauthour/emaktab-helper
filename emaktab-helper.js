@@ -127,17 +127,23 @@
     }
 
     function displayQuestionAndAnswer(questionData) {
-        console.log("displayQuestionAndAnswer called:", questionData);
+        console.log("displayQuestionAndAnswer called:", questionData); // *** DEBUGGING - CHECK questionData ***
         if (currentQuestionDisplay) {
             console.log("currentQuestionDisplay is:", currentQuestionDisplay);
+
+            // *** УПРОЩЕННЫЕ СТИЛИ и innerHTML для ТЕСТИРОВАНИЯ ***
+            currentQuestionDisplay.style.padding = "10px"; // Оставляем padding
+            currentQuestionDisplay.style.border = "1px solid black"; // Делаем границу ЧЕРНОЙ, чтобы было видно
+            currentQuestionDisplay.style.backgroundColor = "white"; // Делаем фон БЕЛЫМ
+            currentQuestionDisplay.style.color = "black"; // Делаем текст ЧЕРНЫМ
             currentQuestionDisplay.innerHTML = `
-                <div style="padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
-                    <b>Вопрос:</b> ${questionData.question}
-                </div>
-                <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
-                    <b>Ответ:</b> ${questionData.answer}
-                </div>
-            `;
+                <b>Вопрос:</b> ${questionData.question}<br><br>
+                <b>Ответ:</b> ${questionData.answer}
+            `; 
+
+            console.log("currentQuestionDisplay.innerHTML set to:", currentQuestionDisplay.innerHTML); // *** DEBUGGING - CHECK innerHTML VALUE ***
+
+
         } else {
             console.error("currentQuestionDisplay is NULL or undefined!");
         }
