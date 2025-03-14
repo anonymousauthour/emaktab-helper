@@ -37,7 +37,23 @@
             { question: "С какими из перечисленных веществ вступает в реакцию хлороводородная кислота? 1 — Zn; 2 — Cu; 3 — CuO; 4 — Cu(OH)₂; 5 — C; 6 — Na₂S.", answer: "1,3,4,6" },
             { question: "Вещества, ускоряющие химические реакции, но остающиеся при этом неизменными, называются …….. .", answer: "катализаторами" },
             { question: "На приведенном графике показана зависимость скорости реакции от концентрации. Как изменится скорость реакции, если концентрация увеличится с 0,2 моль/л до 0,6 моль/л?", answer: "Скорость реакции значительно возрастет" },
-            { question: "Выберите факторы, смещающие химическое равновесие.", answer: "Изменение давления, температуры и концентрации веществ;" }
+            { question: "Выберите факторы, смещающие химическое равновесие.", answer: "Изменение давления, температуры и концентрации веществ;" },
+            { question: "Qaysi qatorda qutbli  kovalent bog‘lanishga ega bo‘lgan kimyoviy birikmalar berilgan.", answer: "HBr, HCl" },
+            { question: "Qaysi qatorda atomli  kristall panjara hosil qiladigan moddalar joylashgan?", answer: "uglerod, olmos, grafit" },
+            { question: "B-C-N-O ushbu qatorda elementlarning qaysi xususiyatlari ortib boradi? 1)elektromanfiyligi 2)atom radiusi 3)oksidlovchilik xossasi 4)aytaruvchilik xossasi", answer: "1,3" },
+            { question: "Qaysi qatorda kimyoviy bog‘lanish turlari to‘g‘ri berilgan?", answer: "kovalent bog‘lanish, ionli bog‘lanish, metall bog‘lanish" },
+            { question: "Qaysi moddalar metall kristall panjara hosil qiladi? 1) natriy  2) kalsiy gidrid 3) kremniy   4) mis  5) suv  6) temir 7) natriy sulfat", answer: "1, 4 va 6" },
+            { question: "Qaynash va suyuqlanish haroratlari yuqori, qattiq, kristall tugunlarida alohida atomlar tutuvchi moddalar qanday kristall panjarali bo‘ladi?", answer: "b" },
+            { question: "Ushbu birikmalarning mavjud bo‘lgan bog‘lanish turi bilan moslashtiring.", answer: " 1-a, 2-c, 3-b, 4-d" },
+            { question: "KClO3 birikmasidagi xlorning oksidlanish darajasini aniqlang.", answer: "+5" },
+            { question: "Oksidlanish-qaytarilish reaksiyasini aniqlang", answer: "MnO2+ 4HCl ⟶ MnCl2 +Cl2+ 2H2O" },
+            { question: "Faqat   оksidlоvchi   хоssаlаrgа  egа   bo‘lgаn  mоddаlаrni   aniqlang.", answer: "1,4" },
+            { question: "NaF, F2O,  HF ushbu moddalar tarkibidagi  ftorning oksidlanish darajasini aniqlang.", answer: "-1" },
+            { question: "Metallmaslar elektronlarni biriktirib olish qobiliyatini kamayib borish tartibini aniqlang.", answer: "S, C, P, H" },
+            { question: "…ns2 np^5 ushbu elektron formula qaysi guruh metallmaslari uchun  umumiy bo‘lgan tashqi energetik qobig‘ining elektron formulasi hisoblanadi.", answer: "galogenlar" },
+            { question: "Quyidagi metallmaslarning oksidlari  (1-4) va ularning molekulyar massalarini  (a-d) bilan moslashtiring.", answer: "1-d, 2-a, 3-b, 4-c" },
+            { question: "Diagramma ifodalangan to'g'ri oksidlanish-qaytarilish reaksiyasi aniqlang", answer: "Li ⟶ Li+ + e-Cl2 + 2e- ⟶ 2Cl-" },
+            { question: "Ftordan yodga tomon galogenlarning atom radiusi ortib boradi. Bu ftorning valent elektronlari yadroga yaqin, yodda esa uzoq, ya'ni yadroga bo'shroq tortilib turadi. ", answer: "kimyoviy faolligi kamayib boradi" }
         ],
         
         "Алгебра (alt1)": [
@@ -55,7 +71,7 @@
             { question: "Упростите выражение", answer: "p-q" },
             { question: "Сколько из следующих неравенств всегда верны, если", answer: "2" },
             { question: "Определите неверное неравенство из следующих.", answer: "при любых значениях кроме a и b, кроме a / 3 и b / 3, будет a2+b2+18<6(a+b)" },
-            { question: "Расстояние между городами A и B равно 441 km. Это расстояние легковая машина преодолеет за 4 часа, а грузовая машина – за 10 часов. Грузовая машина выехала из города A в город B. В это же время легковая машина выехала из города В в город А. На каком расстоянии от города  B они встретятся?", answer: "315 km" },
+            { question: "Расстояние между городами A и B равно 441 km. Это расстояние легковая машина преодолеет за 4 часа, а грузовая машина – за 10 часов. Грузовая машина выехала из города A в город B. В это же время легковая машина выехала из города В в город А. На каком расстоянии от города  B они встретятся?", answer: "315 km" }
         ],
         
         "Химия (alt1)": [
