@@ -91,7 +91,7 @@
         popupWindow = document.createElement('div');
         popupWindow.id = 'examPopupWindow';
         popupWindow.style.position = 'fixed';
-        popupWindow.style.bottom = '20px';
+        popupWindow.style.bottom = '50px'; // Adjusted to 50px for higher position
         popupWindow.style.left = '10px';
         popupWindow.style.backgroundColor = 'rgba(240, 240, 240, 0.95)';
         popupWindow.style.border = '1px solid #888';
