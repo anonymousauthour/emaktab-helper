@@ -52,8 +52,7 @@
 
     let answerBox = null;
     let isAnswerBoxVisible = false;
-    let currentQuestionDisplay = null;
-    let buttonsContainer = null; // **Новая переменная для контейнера кнопок**
+    let questionPopup = null; // **Новая переменная для поп-আপ окна**
 
 
     function createAnswerBox() {
@@ -74,16 +73,6 @@
 
         let answerHTML = "";
 
-        currentQuestionDisplay = document.createElement("div");
-        console.log("currentQuestionDisplay created:", currentQuestionDisplay);
-        answerBox.appendChild(currentQuestionDisplay); // **Добавляем currentQuestionDisplay ПЕРВЫМ**
-
-        buttonsContainer = document.createElement("div"); // **Создаем контейнер для кнопок**
-        console.log("buttonsContainer created:", buttonsContainer); // *** DEBUGGING ***
-        answerBox.appendChild(buttonsContainer); // **Добавляем buttonsContainer ВТОРЫМ**
-        console.log("answerBox children after append:", answerBox.children);
-
-
         for (const subject in categorizedAnswers) {
             if (categorizedAnswers.hasOwnProperty(subject)) {
                 answerHTML += "<b>" + subject + ":</b><br>";
@@ -103,12 +92,11 @@
             }
         }
 
-        buttonsContainer.innerHTML = answerHTML; // **Добавляем HTML КНОПОК в buttonsContainer, а НЕ в answerBox напрямую!**
+        answerBox.innerHTML += answerHTML;
         document.body.appendChild(answerBox);
     }
 
     function createQuestionButton(questionNumber, questionData, buttonText) {
-        console.log("createQuestionButton called:", questionNumber, questionData, buttonText);
         const button = document.createElement("button");
         button.textContent = buttonText;
         button.style.padding = "5px 8px";
@@ -120,43 +108,50 @@
         button.style.fontSize = "12px";
 
         button.onclick = function() {
-            console.log("Button clicked for question:", questionNumber);
-            displayQuestionAndAnswer(questionData);
+            showQuestionPopup(questionData); // **Вызываем функцию для показа поп-ап окна**
         };
         return button;
     }
 
-    function displayQuestionAndAnswer(questionData) {
-        console.log("displayQuestionAndAnswer called:", questionData);
-        if (currentQuestionDisplay) {
-            console.log("currentQuestionDisplay is:", currentQuestionDisplay);
-
-            // *** РАДИКАЛЬНЫЕ СТИЛИ для максимальной видимости! ***
-            currentQuestionDisplay.style.position = "fixed";     // Фиксированное позиционирование
-            currentQuestionDisplay.style.top = "0";            // Прижать к верху экрана
-            currentQuestionDisplay.style.left = "0";           // Прижать к левому краю экрана
-            currentQuestionDisplay.style.width = "98%";         // Занять почти всю ширину экрана
-            currentQuestionDisplay.style.height = "50%";        // Занять половину высоты экрана
-            currentQuestionDisplay.style.padding = "20px";       // Большой padding
-            currentQuestionDisplay.style.border = "5px solid red";   // Толстая КРАСНАЯ граница
-            currentQuestionDisplay.style.backgroundColor = "lightyellow"; // Ярко-ЖЕЛТЫЙ фон
-            currentQuestionDisplay.style.color = "blue";          // ЯРКО-СИНИЙ текст
-            currentQuestionDisplay.style.fontSize = "20px";      // Крупный шрифт
-            currentQuestionDisplay.style.zIndex = "10000";      // Самый высокий z-index
-
-            currentQuestionDisplay.innerHTML = `
-                <b>Вопрос:</b> ${questionData.question}<br><br>
-                <b>Ответ:</b> ${questionData.answer}
-            `;
-
-            console.log("currentQuestionDisplay.innerHTML set to:", currentQuestionDisplay.innerHTML);
-
-
-        } else {
-            console.error("currentQuestionDisplay is NULL or undefined!");
+    function showQuestionPopup(questionData) {
+        if (questionPopup) {
+            questionPopup.remove(); // Удаляем старое поп-ап окно, если есть
         }
-    }
 
+        questionPopup = document.createElement("div");
+        questionPopup.style.position = "fixed";
+        questionPopup.style.top = "50px"; // Позиционируем немного выше answerBox
+        questionPopup.style.left = "10px";
+        questionPopup.style.backgroundColor = "white";
+        questionPopup.style.border = "1px solid #ccc";
+        questionPopup.style.padding = "20px";
+        questionPopup.style.maxWidth = "400px";
+        questionPopup.style.zIndex = "10000";
+        questionPopup.style.fontFamily = "sans-serif";
+        questionPopup.style.fontSize = "16px";
+        questionPopup.style.lineHeight = "1.5";
+        questionPopup.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)"; // Добавляем тень
+
+        questionPopup.innerHTML = `
+            <div style="margin-bottom: 15px;">
+                <b>Вопрос:</b><br>${questionData.question}
+            </div>
+            <div>
+                <b>Ответ:</b> ${questionData.answer}
+            </div>
+            <button id="close-popup-button" style="position: absolute; top: 10px; right: 10px; border: none; background: none; cursor: pointer; font-size: 18px;">
+                X
+            </button>
+        `; // **Добавляем HTML для вопроса, ответа и кнопки "X"**
+
+        document.body.appendChild(questionPopup);
+
+        const closeButton = questionPopup.querySelector('#close-popup-button');
+        closeButton.onclick = function() {
+            questionPopup.remove(); // Закрытие поп-ап окна по клику на "X"
+            questionPopup = null; // Сбрасываем переменную questionPopup
+        };
+    }
 
 
     function toggleAnswerBox() {
@@ -166,6 +161,11 @@
 
         isAnswerBoxVisible = !isAnswerBoxVisible;
         answerBox.style.display = isAnswerBoxVisible ? "block" : "none";
+
+        if (!isAnswerBoxVisible && questionPopup) { // Если закрываем answerBox, закрываем и поп-ап
+            questionPopup.remove();
+            questionPopup = null;
+        }
     }
 
     document.addEventListener('keydown', function(event) {
