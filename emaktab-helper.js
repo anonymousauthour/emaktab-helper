@@ -2,7 +2,7 @@
     'use strict';
 
     // -----------------------------------------------------------------------
-    // Configuration - **MODIFY THIS SECTION**
+    // CFG
     // -----------------------------------------------------------------------
 
     const categorizedAnswers = {
@@ -46,7 +46,7 @@
     };
 
     // -----------------------------------------------------------------------
-    // UI & Functionality
+    // UI 
     // -----------------------------------------------------------------------
 
     let helperWindow = null;
@@ -70,7 +70,6 @@
 
         document.body.appendChild(helperWindow);
 
-        // Category Divs and Question Buttons
         for (const category in categorizedAnswers) {
             const categoryDiv = document.createElement('div');
             categoryDiv.textContent = category + ": ";
@@ -91,7 +90,7 @@
         popupWindow = document.createElement('div');
         popupWindow.id = 'examPopupWindow';
         popupWindow.style.position = 'fixed';
-        popupWindow.style.bottom = '50px'; // Adjusted to 50px for higher position
+        popupWindow.style.bottom = '100px'; // Adjusted to 50px for higher position
         popupWindow.style.left = '10px';
         popupWindow.style.backgroundColor = 'rgba(240, 240, 240, 0.95)';
         popupWindow.style.border = '1px solid #888';
@@ -123,11 +122,10 @@
     function toggleHelperWindow() {
         if (helperWindow) {
             helperWindow.style.display = helperWindow.style.display === 'none' ? 'block' : 'none';
-            hidePopupWindow(); // Close popup when toggling helper
+            hidePopupWindow(); 
         }
     }
 
-    // Event listeners
     document.addEventListener('keydown', function(event) {
         if (event.key === 'z') {
             toggleHelperWindow();
@@ -136,7 +134,6 @@
         }
     });
 
-    // Initialize UI
     createHelperWindow();
     createPopupWindow();
 
