@@ -92,7 +92,7 @@
         helperWindow.style.zIndex = '1000';
         helperWindow.style.display = 'none';
         helperWindow.style.fontSize = '14px';
-        helperWindow.style.maxHeight = '200px';
+        helperWindow.style.maxHeight = '20000px';
         helperWindow.style.overflowY = 'auto';
 
         document.body.appendChild(helperWindow);
@@ -124,8 +124,8 @@
         popupWindow.style.padding = '15px';
         popupWindow.style.zIndex = '1001';
         popupWindow.style.display = 'none';
-        popupWindow.style.maxWidth = '500px';
-        popupWindow.style.maxHeight = '300px';
+        popupWindow.style.maxWidth = '5000px';
+        popupWindow.style.maxHeight = '3000px';
         popupWindow.style.overflowY = 'auto';
         popupWindow.style.fontSize = '16px';
 
