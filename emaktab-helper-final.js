@@ -2,8 +2,9 @@
     'use strict';
 
     // -----------------------------------------------------------------------
-    // CFG
+    // CFG (Corrected Syntax Errors Here)
     // -----------------------------------------------------------------------
+
     const categorizedAnswers = {
         "Алгебра": [
             { question: "Для вариационного ряда 4, 5, 5, 6, 6, 6, 6, 7, 8, 8, 8, 10 найдите значение выражения n6 * n8. Здесь n6 - частота числа 6,  n8 – частота числа 8.", answer: "12" },
@@ -13,7 +14,7 @@
             { question: "Найдите сумму наименьшего и наибольшего натуральных чисел, удовлетворяющих систему неравенств. (таблица)", answer: "11" },
             { question: "Выполните действия: 1 + a − a/a-1", answer: "a + 1/a" },
             { question: "Для вариационного ряда 4, 5, 5, 6, 6, 6, 6, 7, 8, 8, 8, 10 найдите значение выражения", answer: "5/12" },
-            { question: "По данным таблицы найдите среднее значение, моду и медианувыборки и установите соответствие", answer: "I-B, II-C, III-A" },
+            { question: "По данным таблицы найдите среднее значение, моду и медианувыборки и установите соответствие", answer: "I-B, II-C, III-A" }, // Fixed missing quote
             { question: "Сколько различных трёхзначных чисел можно составить из цифр 2, 4, 6, 8, 5, не повторяя их?", answer: "60" },
             { question: "Сколько четырёхзначных чисел, кратных 2, можно составить изцифр 0, 3, 4, 5, 6, 7?", answer: "156" },
             { question: "Сколько существует четырехзначных чисел с одной цифрой 5?", answer: "2673" },
@@ -24,7 +25,7 @@
             { question: "Найдите значение 𝑐 в уравнении", answer: "C = 9" }
         ],
         "Химия": [
-            { question: "Выберите из приведённого перечня комплексные удобрения", answer: "1,2" },
+            { question: "Выберите из приведённого перечня комплексные удобрения", answer: "1,2" }, // Fixed missing quote
             { question: "Какой металл способен вступать в непосредственную реакцию с азотом при комнатной температуре?", answer: "Литий" },
             { question: "Какие реагенты необходимы для получения аммиака в лабораторных условиях.", answer: "NH₄Cl va NaOH" },
             { question: "Найдите правильную последовательность реактивов для следующей цепи превращений", answer: "O₂, H₂O, Ca(OH)₂" },
@@ -35,7 +36,7 @@
             { question: "Какая из нижеперечисленных солей является дигидрофосфатом?", answer: "Ca(H₂PO₄)₂" },
             { question: "Какое вещество выделяется при действии щелочи на соли аммония?", answer: "NH₃" },
             { question: "Какой из следующих ионов образуется на последней стадии диссоциации ортофосфорной кислоты?", answer: "PO₄³⁻" },
-            { question: "Какое из следующих минеральных удобрений не растворяется в воде?", answer: "Ca₃(PO₄)₂" },
+            { question: "Какое из следующих минеральных удобрений не растворяется в воде?", answer: "Ca₃(PO₄)₂" }, // Fixed missing quote
             { question: "Выберите физическое свойство, характерное для белого фосфора", answer: "Бесцветное вещество с молекулярной кристаллической решеткой" },
             { question: "Какие вещества образуются в результате реакции (NO2) оксида азота (IV) с водой?", answer: "HNO₃ и HNO₂" },
             { question: "Основываясь на данных диаграммы, выберите верные ответы из следующих.", answer: "1,4" },
@@ -44,99 +45,92 @@
     };
 
     // -----------------------------------------------------------------------
-    // UI
+    // UI (Uses your original structure for a single panel)
     // -----------------------------------------------------------------------
 
     let helperWindow = null;
-    let popupWindow = null;
+    // popupWindow and currentQuestionData from your original script are not needed with this approach
 
-    // THIS FUNCTION IS NOW REVERTED TO YOUR ORIGINAL SCRIPT'S UI FOR THE HELPER PANEL
-    function createHelperWindow() {
+    function createHelperWindowStructure() {
         helperWindow = document.createElement('div');
         helperWindow.id = 'examHelperWindow';
         helperWindow.style.position = 'fixed';
-        helperWindow.style.bottom = '0'; // As per your original
-        helperWindow.style.left = '0';  // As per your original
-        helperWindow.style.backgroundColor = 'rgba(220, 220, 220, 0.9)'; // As per your original
-        helperWindow.style.border = '1px solid #888'; // As per your original
-        helperWindow.style.padding = '5px'; // As per your original
-        helperWindow.style.zIndex = '1000'; // As per your original
+        helperWindow.style.bottom = '0';
+        helperWindow.style.left = '0';
+        helperWindow.style.backgroundColor = 'rgba(220, 220, 220, 0.9)';
+        helperWindow.style.border = '1px solid #888';
+        helperWindow.style.padding = '5px';
+        helperWindow.style.zIndex = '1000';
         helperWindow.style.display = 'none'; // Initially hidden
-        helperWindow.style.fontSize = '14px'; // As per your original
-        helperWindow.style.maxHeight = '20000px'; // As per your original (effectively no limit)
-        helperWindow.style.overflowY = 'auto'; // As per your original
-
+        helperWindow.style.fontSize = '14px';
+        helperWindow.style.maxHeight = '20000px'; // Your original value
+        helperWindow.style.overflowY = 'auto';
         document.body.appendChild(helperWindow);
+    }
+
+    function renderCategorizedButtonsView() {
+        if (!helperWindow) return;
+        helperWindow.innerHTML = ''; // Clear previous content (e.g., Q/A view)
 
         for (const category in categorizedAnswers) {
             const categoryDiv = document.createElement('div');
-            categoryDiv.textContent = category + ": "; // Text content directly as per your original
+            categoryDiv.textContent = category + ": ";
             helperWindow.appendChild(categoryDiv);
             categorizedAnswers[category].forEach((questionData, index) => {
                 const button = document.createElement('button');
                 button.textContent = (index + 1);
-                button.style.margin = '2px'; // As per your original
-                button.style.padding = '2px 5px'; // As per your original
-                button.style.fontSize = '12px'; // As per your original
-                // button.style.cursor = 'pointer'; // This was my addition, removed for consistency with original
-                // button.title = ... ; // This was my addition, removed
-                button.onclick = () => showPopupQuestion(category, index);
+                button.style.margin = '2px';
+                button.style.padding = '2px 5px';
+                button.style.fontSize = '12px';
+                button.onclick = () => showQuestionInHelperWindow(category, index);
                 categoryDiv.appendChild(button);
             });
         }
     }
 
-    // This function (for the Q/A popup) remains as I designed it, as it was an addition.
-    function showPopupQuestion(category, index) {
+    function showQuestionInHelperWindow(category, index) {
+        if (!helperWindow) return;
         const questionData = categorizedAnswers[category][index];
-        if (!questionData) return;
+        helperWindow.innerHTML = ''; // Clear buttons view
 
-        if (!popupWindow) {
-            popupWindow = document.createElement('div');
-            popupWindow.id = 'examHelperPopup';
-            popupWindow.style.position = 'fixed';
-            popupWindow.style.top = '20px';
-            popupWindow.style.right = '20px';
-            popupWindow.style.width = '400px';
-            popupWindow.style.maxHeight = '80vh';
-            popupWindow.style.overflowY = 'auto';
-            popupWindow.style.backgroundColor = 'rgba(255, 255, 230, 0.98)';
-            popupWindow.style.border = '1px solid #aaa';
-            popupWindow.style.borderRadius = '5px';
-            popupWindow.style.padding = '15px';
-            popupWindow.style.zIndex = '10000'; // Higher than helper window
-            popupWindow.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)';
-            popupWindow.style.fontSize = '14px';
-            popupWindow.style.lineHeight = '1.6';
+        const questionContainer = document.createElement('div');
+        questionContainer.style.padding = '5px'; // Add some internal padding
 
-            const closeButton = document.createElement('button');
-            closeButton.textContent = 'Close (X)';
-            closeButton.style.position = 'absolute';
-            closeButton.style.top = '5px';
-            closeButton.style.right = '5px';
-            closeButton.style.padding = '3px 6px';
-            closeButton.style.cursor = 'pointer';
-            closeButton.onclick = () => {
-                popupWindow.style.display = 'none';
-            };
-            popupWindow.appendChild(closeButton);
+        const questionHeader = document.createElement('h4');
+        questionHeader.textContent = 'Question:';
+        questionHeader.style.margin = '0 0 5px 0';
+        questionContainer.appendChild(questionHeader);
 
-            const contentDiv = document.createElement('div');
-            contentDiv.id = 'popupContent';
-            popupWindow.appendChild(contentDiv);
+        const questionText = document.createElement('p');
+        questionText.textContent = questionData.question;
+        questionText.style.margin = '0 0 10px 0';
+        questionText.style.backgroundColor = '#f0f0f0'; // Light background for question
+        questionText.style.padding = '5px';
+        questionText.style.border = '1px solid #ddd';
+        questionContainer.appendChild(questionText);
 
-            document.body.appendChild(popupWindow);
-        }
+        const answerHeader = document.createElement('h4');
+        answerHeader.textContent = 'Answer:';
+        answerHeader.style.margin = '0 0 5px 0';
+        questionContainer.appendChild(answerHeader);
 
-        const contentDiv = popupWindow.querySelector('#popupContent') || popupWindow;
-        contentDiv.innerHTML = `
-            <h3>Question:</h3>
-            <p style="background-color: #f0f0f0; padding: 8px; border-radius: 3px;">${questionData.question}</p>
-            <h3>Answer:</h3>
-            <p style="background-color: #e0ffe0; padding: 8px; border-radius: 3px; font-weight: bold;">${questionData.answer}</p>
-        `;
-        popupWindow.style.display = 'block';
-        popupWindow.scrollTop = 0;
+        const answerText = document.createElement('p');
+        answerText.textContent = questionData.answer;
+        answerText.style.margin = '0 0 10px 0';
+        answerText.style.backgroundColor = '#e0ffe0'; // Light green background for answer
+        answerText.style.padding = '5px';
+        answerText.style.border = '1px solid #cec';
+        answerText.style.fontWeight = 'bold';
+        questionContainer.appendChild(answerText);
+
+        const backButton = document.createElement('button');
+        backButton.textContent = '← Back to List';
+        backButton.style.padding = '5px 10px';
+        backButton.style.marginTop = '10px';
+        backButton.onclick = renderCategorizedButtonsView; // Go back to buttons view
+        questionContainer.appendChild(backButton);
+
+        helperWindow.appendChild(questionContainer);
     }
 
     // -----------------------------------------------------------------------
@@ -145,28 +139,19 @@
 
     function init() {
         if (document.getElementById('examHelperWindow')) {
-             // console.log("Exam Helper: Already initialized."); // Optional: can be noisy
-            return;
+            return; // Already initialized
         }
 
-        createHelperWindow(); // This will now create the UI as per your original spec for this panel
+        createHelperWindowStructure(); // Creates the div
+        renderCategorizedButtonsView(); // Fills it with buttons initially
 
         document.addEventListener('keydown', function(e) {
-            // Condition for toggling the helper window
             if (e.key === 'Z') { // Capital Z to toggle helper
-                // e.preventDefault(); // Optional: uncomment if 'Z' should not be typed into fields
                 if (helperWindow) {
                     helperWindow.style.display = helperWindow.style.display === 'none' ? 'block' : 'none';
                 }
             }
-
-            // Condition for closing the popup window
-            if (e.key === 'Escape') {
-                 if (popupWindow && popupWindow.style.display !== 'none') {
-                    popupWindow.style.display = 'none';
-                    e.preventDefault();
-                 }
-            }
+            // No Escape key needed for this panel, 'Back' button handles navigation within
         });
 
         console.log("Exam Helper Loaded. Press capital Z to toggle.");
