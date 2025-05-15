@@ -13,7 +13,7 @@
             { question: "Найдите сумму наименьшего и наибольшего натуральных чисел, удовлетворяющих систему неравенств. (таблица)", answer: "11" },
             { question: "Выполните действия: 1 + a − a/a-1", answer: "a + 1/a" },
             { question: "Для вариационного ряда 4, 5, 5, 6, 6, 6, 6, 7, 8, 8, 8, 10 найдите значение выражения", answer: "5/12" },
-            { question: "По данным таблицы найдите среднее значение, моду и медианувыборки и установите соответствие", answer: "I-B, II-C, III-A" }, // Fixed
+            { question: "По данным таблицы найдите среднее значение, моду и медианувыборки и установите соответствие", answer: "I-B, II-C, III-A" },
             { question: "Сколько различных трёхзначных чисел можно составить из цифр 2, 4, 6, 8, 5, не повторяя их?", answer: "60" },
             { question: "Сколько четырёхзначных чисел, кратных 2, можно составить изцифр 0, 3, 4, 5, 6, 7?", answer: "156" },
             { question: "Сколько существует четырехзначных чисел с одной цифрой 5?", answer: "2673" },
@@ -24,7 +24,7 @@
             { question: "Найдите значение 𝑐 в уравнении", answer: "C = 9" }
         ],
         "Химия": [
-            { question: "Выберите из приведённого перечня комплексные удобрения", answer: "1,2" }, // Fixed
+            { question: "Выберите из приведённого перечня комплексные удобрения", answer: "1,2" },
             { question: "Какой металл способен вступать в непосредственную реакцию с азотом при комнатной температуре?", answer: "Литий" },
             { question: "Какие реагенты необходимы для получения аммиака в лабораторных условиях.", answer: "NH₄Cl va NaOH" },
             { question: "Найдите правильную последовательность реактивов для следующей цепи превращений", answer: "O₂, H₂O, Ca(OH)₂" },
@@ -35,7 +35,7 @@
             { question: "Какая из нижеперечисленных солей является дигидрофосфатом?", answer: "Ca(H₂PO₄)₂" },
             { question: "Какое вещество выделяется при действии щелочи на соли аммония?", answer: "NH₃" },
             { question: "Какой из следующих ионов образуется на последней стадии диссоциации ортофосфорной кислоты?", answer: "PO₄³⁻" },
-            { question: "Какое из следующих минеральных удобрений не растворяется в воде?", answer: "Ca₃(PO₄)₂" }, // Fixed
+            { question: "Какое из следующих минеральных удобрений не растворяется в воде?", answer: "Ca₃(PO₄)₂" },
             { question: "Выберите физическое свойство, характерное для белого фосфора", answer: "Бесцветное вещество с молекулярной кристаллической решеткой" },
             { question: "Какие вещества образуются в результате реакции (NO2) оксида азота (IV) с водой?", answer: "HNO₃ и HNO₂" },
             { question: "Основываясь на данных диаграммы, выберите верные ответы из следующих.", answer: "1,4" },
@@ -44,120 +44,134 @@
     };
 
     // -----------------------------------------------------------------------
-    // UI - Structure and styling for helperWindow is EXACTLY as user's first script.
-    // `popupWindow` and `currentQuestionData` from user's original script are removed.
+    // UI
     // -----------------------------------------------------------------------
 
     let helperWindow = null;
 
-    // Renders the initial view with category buttons inside helperWindow.
-    // This is also called by the "Back" button.
     function renderInitialHelperView() {
         if (!helperWindow) return;
-        helperWindow.innerHTML = ''; // Clear previous content
+        helperWindow.innerHTML = '';
+
+        // To make categories flow horizontally, we can set helperWindow to not wrap its direct children easily
+        // and make categoryDivs inline or inline-block.
+        helperWindow.style.whiteSpace = 'nowrap'; // Prevent categoryDivs from wrapping if they are inline-block
+        helperWindow.style.overflowX = 'auto';   // Allow helperWindow itself to scroll horizontally
 
         for (const category in categorizedAnswers) {
             const categoryDiv = document.createElement('div');
-            categoryDiv.textContent = category + ": "; // EXACTLY as in user's original script
-            helperWindow.appendChild(categoryDiv);
+            // **** KEY CHANGE FOR HORIZONTAL LAYOUT OF CATEGORIES ****
+            categoryDiv.style.display = 'inline-block'; // Makes category blocks flow horizontally
+            categoryDiv.style.verticalAlign = 'top';    // Align blocks nicely if they have different heights
+            categoryDiv.style.marginRight = '10px';     // Spacing between category blocks
+            categoryDiv.style.whiteSpace = 'normal';    // Allow content *within* categoryDiv (buttons) to wrap normally
+
+            const categoryNameSpan = document.createElement('span'); // Keep name and buttons within the inline-block
+            categoryNameSpan.textContent = category + ": ";
+            categoryDiv.appendChild(categoryNameSpan);
+
             categorizedAnswers[category].forEach((questionData, index) => {
                 const button = document.createElement('button');
                 button.textContent = (index + 1);
-                button.style.margin = '2px';      // EXACTLY as in user's original script
-                button.style.padding = '2px 5px'; // EXACTLY as in user's original script
-                button.style.fontSize = '12px';   // EXACTLY as in user's original script
-                // This function name matches the one in your original script that was empty.
+                button.style.margin = '2px';
+                button.style.padding = '2px 5px';
+                button.style.fontSize = '12px';
                 button.onclick = () => showPopupQuestion(category, index);
-                categoryDiv.appendChild(button);
+                categoryDiv.appendChild(button); // Append buttons to the categoryDiv
             });
+            helperWindow.appendChild(categoryDiv); // Append the now inline-block categoryDiv
         }
     }
 
-    // This is the implementation for your originally empty `showPopupQuestion`.
-    // It displays the question and answer *inside* the existing helperWindow.
     function showPopupQuestion(category, index) {
         if (!helperWindow) return;
         const questionData = categorizedAnswers[category][index];
         helperWindow.innerHTML = ''; // Clear the button list
+        helperWindow.style.whiteSpace = 'normal'; // Reset whiteSpace for Q/A view
+        helperWindow.style.overflowX = 'hidden';  // No horizontal scroll needed for Q/A view typically
 
-        // Display Question (very basic display, no extra styling beyond simple tags)
-        const qLabel = document.createElement('div'); // Using div for simple text block
+        const qLabel = document.createElement('div');
         qLabel.textContent = 'Question:';
-        qLabel.style.marginBottom = '2px'; // Minimal spacing
+        qLabel.style.marginBottom = '2px';
         helperWindow.appendChild(qLabel);
 
         const qText = document.createElement('div');
         qText.textContent = questionData.question;
-        qText.style.marginBottom = '8px'; // Minimal spacing
+        qText.style.marginBottom = '8px';
         helperWindow.appendChild(qText);
 
-        // Display Answer (very basic display)
         const aLabel = document.createElement('div');
         aLabel.textContent = 'Answer:';
-        aLabel.style.marginBottom = '2px'; // Minimal spacing
+        aLabel.style.marginBottom = '2px';
         helperWindow.appendChild(aLabel);
 
         const aText = document.createElement('div');
         aText.textContent = questionData.answer;
-        aText.style.fontWeight = 'bold'; // Make answer bold for some emphasis
-        aText.style.marginBottom = '10px'; // Minimal spacing
+        aText.style.fontWeight = 'bold';
+        aText.style.marginBottom = '10px';
         helperWindow.appendChild(aText);
 
-        // Add a "Back" button to return to the list of questions
         const backButton = document.createElement('button');
         backButton.textContent = '← Back to List';
-        // Apply the same styling as your original number buttons for consistency
         backButton.style.margin = '2px';
         backButton.style.padding = '2px 5px';
         backButton.style.fontSize = '12px';
-        backButton.onclick = renderInitialHelperView; // This re-draws the button list
+        backButton.onclick = renderInitialHelperView;
         helperWindow.appendChild(backButton);
     }
 
-
-    // This function creates the main helperWindow div container ONCE.
-    // Its content is then managed by renderInitialHelperView() and showPopupQuestion().
-    // The styling here is EXACTLY from your original script's createHelperWindow.
     function createHelperWindowContainer() {
         helperWindow = document.createElement('div');
-        helperWindow.id = 'examHelperWindow'; // From your original script
+        helperWindow.id = 'examHelperWindow';
         helperWindow.style.position = 'fixed';
         helperWindow.style.bottom = '0';
         helperWindow.style.left = '0';
+        // Potentially make it full width if horizontal layout is desired across the bottom
+        // helperWindow.style.width = '100%';
+        // helperWindow.style.boxSizing = 'border-box'; // If width is 100% and padding is used
         helperWindow.style.backgroundColor = 'rgba(220, 220, 220, 0.9)';
         helperWindow.style.border = '1px solid #888';
         helperWindow.style.padding = '5px';
         helperWindow.style.zIndex = '1000';
-        helperWindow.style.display = 'none'; // Initially hidden
-        helperWindow.style.fontSize = '14px'; // Overall font size for the panel
-        helperWindow.style.maxHeight = '20000px'; // Your original value
-        helperWindow.style.overflowY = 'auto';
+        helperWindow.style.display = 'none';
+        helperWindow.style.fontSize = '14px';
+        // For a horizontal bar, maxHeight should be constrained, not 20000px
+        // helperWindow.style.maxHeight = '100px'; // Example if it's a short horizontal bar
+        // If using maxHeight like above, overflowY might be 'auto' or 'hidden'
+        helperWindow.style.maxHeight = '20000px'; // YOUR ORIGINAL - this allows it to be tall
+        helperWindow.style.overflowY = 'auto';   // YOUR ORIGINAL - vertical scroll if taller than viewport
+        // helperWindow.style.overflowX = 'auto'; // Added in renderInitialHelperView for horizontal scroll of categories
         document.body.appendChild(helperWindow);
     }
 
     // -----------------------------------------------------------------------
-    // Initialization & Event Listeners (Added for overall script functionality)
+    // Initialization & Event Listeners
     // -----------------------------------------------------------------------
     function init() {
         if (document.getElementById('examHelperWindow')) {
-            return; // Already initialized
+            return;
         }
+        createHelperWindowContainer();
+        renderInitialHelperView();
 
-        createHelperWindowContainer(); // Create the div shell (styled as per your original)
-        renderInitialHelperView();     // Fill it with the initial buttons (styled as per your original)
-
-        // Event listener for the toggle key
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Z') { // Capital Z to toggle helper
+            if (e.key === 'Z') {
                 if (helperWindow) {
                     helperWindow.style.display = helperWindow.style.display === 'none' ? 'block' : 'none';
+                    if (helperWindow.style.display === 'block') {
+                        // If we are showing it, and it was previously in Q/A view, ensure it's back to list view
+                        // This check might be too aggressive if user hid it during Q/A view and wants to see Q/A again.
+                        // For now, let's assume toggling always shows the initial list view if it was hidden.
+                        // Or, better, only call renderInitialHelperView if it's the *first time* or after Q/A.
+                        // The current structure handles this okay because showPopupQuestion changes content,
+                        // and "Back" button calls renderInitialHelperView.
+                    }
                 }
             }
         });
-        console.log("Exam Helper Loaded. Press capital Z to toggle. UI and Q/A display are per original script intent.");
+        console.log("Exam Helper Loaded. Press capital Z to toggle. Categories should now be horizontal.");
     }
 
-    // Standard auto-run logic for userscripts
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
