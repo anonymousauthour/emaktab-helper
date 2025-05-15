@@ -50,57 +50,43 @@
     let helperWindow = null;
     let popupWindow = null;
 
+    // THIS FUNCTION IS NOW REVERTED TO YOUR ORIGINAL SCRIPT'S UI FOR THE HELPER PANEL
     function createHelperWindow() {
         helperWindow = document.createElement('div');
         helperWindow.id = 'examHelperWindow';
         helperWindow.style.position = 'fixed';
-        helperWindow.style.bottom = '10px';
-        helperWindow.style.left = '10px';
-        helperWindow.style.backgroundColor = 'rgba(240, 240, 240, 0.95)';
-        helperWindow.style.border = '1px solid #777';
-        helperWindow.style.borderRadius = '5px';
-        helperWindow.style.padding = '10px';
-        helperWindow.style.zIndex = '9999';
-        helperWindow.style.display = 'none'; // CRITICAL: Initially hidden
-        helperWindow.style.fontSize = '14px';
-        helperWindow.style.maxHeight = '300px';
-        helperWindow.style.maxWidth = '400px';
-        helperWindow.style.overflowY = 'auto';
-        helperWindow.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-
-        const title = document.createElement('h3');
-        title.textContent = 'Exam Helper (Press Z)'; // Updated title
-        title.style.marginTop = '0';
-        title.style.marginBottom = '10px';
-        title.style.textAlign = 'center';
-        helperWindow.appendChild(title);
+        helperWindow.style.bottom = '0'; // As per your original
+        helperWindow.style.left = '0';  // As per your original
+        helperWindow.style.backgroundColor = 'rgba(220, 220, 220, 0.9)'; // As per your original
+        helperWindow.style.border = '1px solid #888'; // As per your original
+        helperWindow.style.padding = '5px'; // As per your original
+        helperWindow.style.zIndex = '1000'; // As per your original
+        helperWindow.style.display = 'none'; // Initially hidden
+        helperWindow.style.fontSize = '14px'; // As per your original
+        helperWindow.style.maxHeight = '20000px'; // As per your original (effectively no limit)
+        helperWindow.style.overflowY = 'auto'; // As per your original
 
         document.body.appendChild(helperWindow);
 
         for (const category in categorizedAnswers) {
             const categoryDiv = document.createElement('div');
-            categoryDiv.style.marginBottom = '10px';
-
-            const categoryTitle = document.createElement('strong');
-            categoryTitle.textContent = category + ": ";
-            categoryDiv.appendChild(categoryTitle);
-            categoryDiv.appendChild(document.createElement('br'));
-
+            categoryDiv.textContent = category + ": "; // Text content directly as per your original
+            helperWindow.appendChild(categoryDiv);
             categorizedAnswers[category].forEach((questionData, index) => {
                 const button = document.createElement('button');
                 button.textContent = (index + 1);
-                button.style.margin = '3px';
-                button.style.padding = '4px 8px';
-                button.style.fontSize = '12px';
-                button.style.cursor = 'pointer';
-                button.title = questionData.question.substring(0, 50) + "...";
+                button.style.margin = '2px'; // As per your original
+                button.style.padding = '2px 5px'; // As per your original
+                button.style.fontSize = '12px'; // As per your original
+                // button.style.cursor = 'pointer'; // This was my addition, removed for consistency with original
+                // button.title = ... ; // This was my addition, removed
                 button.onclick = () => showPopupQuestion(category, index);
                 categoryDiv.appendChild(button);
             });
-            helperWindow.appendChild(categoryDiv);
         }
     }
 
+    // This function (for the Q/A popup) remains as I designed it, as it was an addition.
     function showPopupQuestion(category, index) {
         const questionData = categorizedAnswers[category][index];
         if (!questionData) return;
@@ -118,7 +104,7 @@
             popupWindow.style.border = '1px solid #aaa';
             popupWindow.style.borderRadius = '5px';
             popupWindow.style.padding = '15px';
-            popupWindow.style.zIndex = '10000';
+            popupWindow.style.zIndex = '10000'; // Higher than helper window
             popupWindow.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)';
             popupWindow.style.fontSize = '14px';
             popupWindow.style.lineHeight = '1.6';
@@ -159,26 +145,18 @@
 
     function init() {
         if (document.getElementById('examHelperWindow')) {
-            console.log("Exam Helper: Already initialized. If toggle isn't working, there might be an issue with the event listener or key detection.");
+             // console.log("Exam Helper: Already initialized."); // Optional: can be noisy
             return;
         }
 
-        createHelperWindow(); // This sets helperWindow.style.display = 'none';
+        createHelperWindow(); // This will now create the UI as per your original spec for this panel
 
         document.addEventListener('keydown', function(e) {
-            // --- TEMPORARY DEBUGGING ---
-            // Log details for any key press to see what the browser reports for 'Z' with CapsLock
-            console.log('Key pressed:', e.key, '| Code:', e.code, '| Shift:', e.shiftKey, '| CapsLock active (via getModifierState):', e.getModifierState ? e.getModifierState("CapsLock") : "N/A");
-            // --- END TEMPORARY DEBUGGING ---
-
             // Condition for toggling the helper window
-            if (e.key === 'Z') { // This checks for the character 'Z'
+            if (e.key === 'Z') { // Capital Z to toggle helper
                 // e.preventDefault(); // Optional: uncomment if 'Z' should not be typed into fields
                 if (helperWindow) {
-                    // This is the core toggle logic. It relies on the initial state being 'none'.
                     helperWindow.style.display = helperWindow.style.display === 'none' ? 'block' : 'none';
-                } else {
-                    console.error("Exam Helper: helperWindow is not defined when trying to toggle.");
                 }
             }
 
@@ -186,19 +164,19 @@
             if (e.key === 'Escape') {
                  if (popupWindow && popupWindow.style.display !== 'none') {
                     popupWindow.style.display = 'none';
-                    e.preventDefault(); // Prevent default Escape key behavior (like closing modals)
+                    e.preventDefault();
                  }
             }
         });
 
-        console.log("Exam Helper Loaded. Press capital Z to toggle. Check console for key press details.");
+        console.log("Exam Helper Loaded. Press capital Z to toggle.");
     }
 
     // Ensure the DOM is ready before trying to append elements
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
-        init(); // Call directly if DOM is already loaded
+        init();
     }
 
 })();
