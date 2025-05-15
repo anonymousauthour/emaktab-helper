@@ -53,22 +53,19 @@
 
 
     function createHelperWindow() {
-        helperWindow = document.createElement('div');
-        helperWindow.id = 'examHelperWindow';
-        helperWindow.style.position = 'fixed';
-        helperWindow.style.bottom = '10px';
-        helperWindow.style.left = '10px';
-        helperWindow.style.backgroundColor = 'rgba(240, 240, 240, 0.95)';
-        helperWindow.style.border = '1px solid #777';
-        helperWindow.style.borderRadius = '5px';
-        helperWindow.style.padding = '10px';
-        helperWindow.style.zIndex = '9999'; 
-        helperWindow.style.display = 'none'; 
-        helperWindow.style.fontSize = '14px';
-        helperWindow.style.maxHeight = '300px'; 
-        helperWindow.style.maxWidth = '400px';
-        helperWindow.style.overflowY = 'auto';
-        helperWindow.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+    helperWindow = document.createElement('div');
+    helperWindow.id = 'examHelperWindow';
+    helperWindow.style.position = 'fixed';
+    helperWindow.style.bottom = '0';
+    helperWindow.style.left = '0';
+    helperWindow.style.backgroundColor = 'rgba(220, 220, 220, 0.9)';
+    helperWindow.style.border = '1px solid #888';
+    helperWindow.style.padding = '5px';
+    helperWindow.style.zIndex = '1000';
+    helperWindow.style.display = 'none';
+    helperWindow.style.fontSize = '14px';
+    helperWindow.style.maxHeight = '20000px';
+    helperWindow.style.overflowY = 'auto';
 
         const title = document.createElement('h3');
         title.textContent = 'Exam Helper (Ctrl+M)';
