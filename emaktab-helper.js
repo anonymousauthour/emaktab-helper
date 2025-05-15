@@ -165,13 +165,11 @@
         createHelperWindow();
 
         document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'm') {
-                e.preventDefault();
+            if (e.key === 'Z') {
                 if (helperWindow) {
                     helperWindow.style.display = helperWindow.style.display === 'none' ? 'block' : 'none';
                 }
-            }
-            if (e.key === 'Escape') { // Escape key to close popup
+            }            if (e.key === 'Escape') { // Escape key to close popup
                  if (popupWindow && popupWindow.style.display !== 'none') {
                     popupWindow.style.display = 'none';
                     e.preventDefault();
